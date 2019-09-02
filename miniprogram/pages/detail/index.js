@@ -1,5 +1,6 @@
 // miniprogram/pages/detail/index.js
 let backgroundAudioManager = wx.getBackgroundAudioManager() //当前播放音乐信息
+let AudioContext = wx.createInnerAudioContext()
 Page({
 
   /**
@@ -32,36 +33,48 @@ Page({
     this.playMusic()
   },
 
+  //执行播放
   playMusic: function () {
-    //执行播放
     wx.playBackgroundAudio({
-      dataUrl: 'https://m8.music.126.net/20190902223822/07ed61eee36aef184d2b2d0a9515af7c/yyaac/0508/0e5b/015b/2bd724b6ca912b7bbfc261127d74b60d.m4a'
+      // dataUrl: '../../mp3/wumingzhibei.m4a'
+      dataUrl: 'https://m7.music.126.net/20190902234315/83897e2bf2b815af38ba5da83895b250/yyaac/0508/0e5b/015b/2bd724b6ca912b7bbfc261127d74b60d.m4a'
     })
-    //异步获取音乐时长
-    let outTime = setInterval(() => {
-      if(this.data.duration == 'undefined') {
-        let num = Math.round(backgroundAudioManager.duration)
-        if(num !== 'NaN') {
-          var min = parseInt(num / 60);
-          var sec = parseInt(num % 60);
-          if (min.toString().length == 1) {
-            min = `0${min}`;
+    // AudioContext.setSrc('https://m7.music.126.net/20190902234315/83897e2bf2b815af38ba5da83895b250/yyaac/0508/0e5b/015b/2bd724b6ca912b7bbfc261127d74b60d.m4a')
+    console.log(AudioContext)
+    // if(backgroundAudioManager.duration) {
+      let outTime = setInterval(() => {
+        //异步获取音乐时长
+        if(this.data.duration == 'undefined' || isNaN(this.data.duration)) {
+          let num = Math.round(backgroundAudioManager.duration)
+          if(!isNaN(num)) {
+            var min = parseInt(num / 60);
+            var sec = parseInt(num % 60);
+            if (min.toString().length == 1) {
+              min = `0${min}`;
+            }
+            if (sec.toString().length == 1) {
+              sec = `0${sec}`;
+            }
+            this.setData({
+              Time2: min + ':' + sec,
+              start: true,
+              duration: Math.round(num)
+            })
           }
-          if (sec.toString().length == 1) {
-            sec = `0${sec}`;
-          }
-          this.setData({
-            Time2: min + ':' + sec,
-            start: true,
-            duration: Math.round(num)
-          })
+        } else {
+          //确定duration已经赋值 清除定时器
+          clearInterval(outTime)
+          return
         }
-      } else {
-        //确定duration已经赋值 清除定时器
-        clearInterval(outTime)
-        return
-      }
-    }, 100)
+      }, 100)
+    // } else {
+      // this.setData({
+      //   Time1: '00:00',
+      //   Time2: '00:00'
+      // })
+    // }
+
+
   },
 
   //点击播放暂停
@@ -78,7 +91,6 @@ Page({
 
   //进度条按下时不在给进度条赋值value
   sliderEnd: function () {
-    console.log(1)
     this.setData({
       huadong: false
     })
@@ -110,8 +122,6 @@ Page({
         let currentTime = Math.round(backgroundAudioManager.currentTime)
         let duration = Math.round(backgroundAudioManager.duration)
         let audioTime = parseInt(100 * currentTime / duration)
-        console.log(currentTime)
-
         var min = parseInt(currentTime / 60);
         var sec = parseInt(currentTime % 60);
         if (min.toString().length == 1) {
@@ -120,29 +130,35 @@ Page({
         if (sec.toString().length == 1) {
           sec = `0${sec}`;
         }
-        let Time1 = min + ':' + sec
-        if(currentTime !== duration) {
-          if(this.data.huadong) {
-            this.setData({
-              Time1,
-              currentTime,
-              audioTime
-            })
-          } else {
-            this.setData({
-              Time1,
-              currentTime
-            })
+        if(!isNaN(min)) {
+          let Time1 = min + ':' + sec
+          if(currentTime !== duration) {
+            if(this.data.huadong) {
+              this.setData({
+                Time1,
+                currentTime,
+                audioTime
+              })
+            } else {
+              this.setData({
+                Time1,
+                currentTime
+              })
+            }
+          } else { //当播放完成时
+            // clearInterval(this.data.durationIntval)
+            // this.setData({
+            //   Time1: '00:00',
+            //   currentTime: 0,
+            //   audioTime: 0
+            // })
+            this.playMusic()
           }
-        } else { //当播放完成时
-          // clearInterval(this.data.durationIntval)
-          // this.setData({
-          //   Time1: '00:00',
-          //   currentTime: 0,
-          //   audioTime: 0
-          // })
-          this.playMusic()
+        } else {
+          console.log('无法播放哦')
+          clearInterval(this.data.durationIntval)
         }
+
 
 
       }
