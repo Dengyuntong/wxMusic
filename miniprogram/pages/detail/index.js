@@ -29,21 +29,31 @@ Page({
       capsuleTop: options.capsuleTop * 1 + 6 + 'px',
       boxHeight: wx.getSystemInfoSync().windowHeight + 'px' //动态获取屏幕高度赋值给父盒子
     })
+    this.playMusic()
+  },
 
-    //加载页面时执行播放
+  playMusic: function () {
+    //执行播放
     wx.playBackgroundAudio({
-      dataUrl: 'https://m8.music.126.net/20190902215436/33038b289555239b47c758c526286018/yyaac/0508/0e5b/015b/2bd724b6ca912b7bbfc261127d74b60d.m4a'
+      dataUrl: 'https://m8.music.126.net/20190902223822/07ed61eee36aef184d2b2d0a9515af7c/yyaac/0508/0e5b/015b/2bd724b6ca912b7bbfc261127d74b60d.m4a'
     })
     //异步获取音乐时长
     let outTime = setInterval(() => {
       if(this.data.duration == 'undefined') {
-        let num = (backgroundAudioManager.duration/60).toFixed(2)
+        let num = Math.round(backgroundAudioManager.duration)
         if(num !== 'NaN') {
-          let Time2 = num.length > 4 ? num : '0' + num
+          var min = parseInt(num / 60);
+          var sec = parseInt(num % 60);
+          if (min.toString().length == 1) {
+            min = `0${min}`;
+          }
+          if (sec.toString().length == 1) {
+            sec = `0${sec}`;
+          }
           this.setData({
-            Time2,
+            Time2: min + ':' + sec,
             start: true,
-            duration: num
+            duration: Math.round(num)
           })
         }
       } else {
@@ -76,9 +86,7 @@ Page({
 
   //滑动时触发
   mobile: function(e) {
-    console.log(this.data.huadong)
     let allTime = Math.round(backgroundAudioManager.duration)
-    // console.log(e.detail.value/allTime, allTime,e.detail.value)
     let val = e.detail.value
     if(val < 100) {
       val = '0.' + val
@@ -102,7 +110,7 @@ Page({
         let currentTime = Math.round(backgroundAudioManager.currentTime)
         let duration = Math.round(backgroundAudioManager.duration)
         let audioTime = parseInt(100 * currentTime / duration)
-        // console.log(Time)
+        console.log(currentTime)
 
         var min = parseInt(currentTime / 60);
         var sec = parseInt(currentTime % 60);
@@ -113,19 +121,29 @@ Page({
           sec = `0${sec}`;
         }
         let Time1 = min + ':' + sec
-        console.log(this.data.huadong)
-        if(this.data.huadong) {
-          this.setData({
-            Time1,
-            currentTime,
-            audioTime
-          })
-        } else {
-          this.setData({
-            Time1,
-            currentTime
-          })
+        if(currentTime !== duration) {
+          if(this.data.huadong) {
+            this.setData({
+              Time1,
+              currentTime,
+              audioTime
+            })
+          } else {
+            this.setData({
+              Time1,
+              currentTime
+            })
+          }
+        } else { //当播放完成时
+          // clearInterval(this.data.durationIntval)
+          // this.setData({
+          //   Time1: '00:00',
+          //   currentTime: 0,
+          //   audioTime: 0
+          // })
+          this.playMusic()
         }
+
 
       }
     }, 1000)
