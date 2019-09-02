@@ -1,0 +1,73 @@
+<!-- index.wxml -->
+<view class="container">
+  <view class="login">
+
+  </view>
+  <scroll-view scroll-y class="index_scroll">
+    <!-- 导航 -->
+    <view class="nav {{navshowhide ? 'nav_active':''}}" style="margin-top: {{navMargin}}" animation="{{navAnimation}}">
+      <view style="width: 17%">
+        <navigator hover-stay-time="0" open-type="navigateTo" hover-class="navigator-hover" url="./index.wxml">
+          首页
+        </navigator>
+      </view>
+      <view style="width: 17%">
+        <navigator hover-stay-time="0" open-type="navigateTo" hover-class="navigator-hover" url="../hot/index">
+          热门
+        </navigator>
+      </view>
+      <view style="width: 17%">
+        <navigator hover-stay-time="0" open-type="navigateTo" hover-class="navigator-hover" url="../newMusic/index">
+          新歌
+        </navigator>
+      </view>
+      <view style="width: 24.5%">
+        <navigator hover-stay-time="0" open-type="navigateTo" hover-class="navigator-hover" url="../everyday/index">
+          每日推荐
+        </navigator>
+      </view>
+      <view style="width: 24.5%">
+        <navigator hover-stay-time="0" open-type="navigateTo" hover-class="navigator-hover" url="../my/index">
+          我的收藏
+        </navigator>
+      </view>
+    </view>
+    <!-- banner 图 -->
+    <view class="index_banner" style="height: {{bannerHeight}}">
+       <my-swiper imgUrls="{{imgUrls}}" color="#fff" autoplay="true" interval="2000" duration="600" circular="true" bind:swiperChange="onSwiperChange" currentSwiper="{{currentSwiper}}" />
+      <view class="my_dost">
+        <!-- banner 图小点-->
+        <view class="my_dost_child {{index===currentSwiper? 'swiper_acrive' : ''}}" wx:for="{{imgUrls}}" wx:key="index" animation="{{animation}}"></view>
+      </view>
+    </view>
+    <!-- 横向滚动图 -->
+    <view class="scroll_x">
+      <view class="scroll_x_box" wx:for="{{scrollX}}" wx:key="index">
+        <image src="{{item}}" alt="" class="img"/>
+      </view>
+    </view>
+    <view class="body">
+      <view class="body_title">
+        <text>今日首选</text>
+      </view>
+      <view wx:for="{{listData}}" wx:key="index">
+        <view class="dl" bindtap="gotoItem" data-id="{{item[0]}}">
+          <view class="dt">{{item[0]}}</view>
+          <view class="dd">
+            <text>测试测试测试测试测试测试测试测试</text>
+            <text>测试测试测试测试测试测试测试测试</text>
+            <text>测试测试测试测试测试测试测试测试</text>
+          </view>
+        </view>
+        <view class="dl" bindtap="gotoItem" data-id="{{item[1]}}">
+          <view class="ddr">
+            <text>测试测试测试测试测试测试测试测试</text>
+            <text>测试测试测试测试测试测试测试测试</text>
+            <text>测试测试测试测试测试测试测试测试</text>
+          </view>
+          <view class="dtr">{{item[1]}}</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

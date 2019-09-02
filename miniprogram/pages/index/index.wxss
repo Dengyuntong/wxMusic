@@ -1,0 +1,201 @@
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+.index_banner{
+  width: 100%;
+  height: 40%;
+  background: #ccc;
+  position: relative;
+}
+
+.scroll_x{
+  width: 100%;
+  /* background: #eee; */
+  box-sizing: border-box;
+  padding: 1rem 0;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.scroll_x > view {
+  width: 10rem;
+  height: 6.5rem;
+  /* background: #bbb; */
+  margin: 0 1rem;
+  display: inline-block;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 6.5rem;
+  overflow: hidden;
+}
+.my_dost{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  position: absolute;
+  bottom: 1rem;
+}
+.my_dost_child{
+  width: 30rpx;
+  height: 10rpx;
+  background: rgba(0, 0, 0, .3);
+  margin: 0 7rpx;
+  border-radius: 10rpx;
+}
+
+@keyframes viewlinear {
+  0% {
+    width: 0rpx;
+  }
+  100% {
+    width: 70rpx;
+  }
+}
+
+.swiper_acrive{
+  background: rgb(64, 153, 255);
+  animation: viewlinear .3s ease-out;
+  animation-fill-mode: forwards; /* 让动画停留下最后一帧*/
+  border-radius: 10rpx;
+}
+
+
+.nav{
+  width: 100%;
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  text-shadow:0px 0px 3px #000;
+  font-family: '幼圆'
+}
+
+.body{
+  width: 100%;
+}
+.body_title{
+  box-sizing: border-box;
+  width: 100%;
+  padding: .5rem .6rem;
+}
+.body_title > text{
+  font-size: 40rpx;
+  font-weight: bold;
+}
+.dl{
+  width: 100%;
+  height: 7.7rem;
+  box-sizing: border-box;
+  padding: .5rem;
+  display: flex;
+}
+.dt{
+  width: 30%;
+  height: 100%;
+  margin-right: 1rem;
+  /***/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 4rem;
+}
+.dtr{
+  width: 30%;
+  height: 100%;
+  margin-left: 1rem;
+  /***/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 4rem;
+}
+.dd{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding: .8rem;
+  overflow:hidden
+}
+.ddr{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding: .8rem;
+  overflow:hidden
+}
+.dd > text {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  display: inline;
+  font-size: .85rem;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  color: #666;
+}
+
+.index_scroll{
+  width: 100%;
+}
+
+navigator {
+  box-sizing: border-box;
+  padding: .3rem 0;
+  /* padding-left: .3rem; */
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+}
+.navigator-hover{
+  font-size: .9rem;
+  background: 0;
+}
+.img{
+  width: 100%;
+  height: 100%;
+}
+.login {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: url('http://pic1.win4000.com/tj/2019-08-16/5d565836acf81.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  -webkit-filter: blur(5px); /* Chrome, Opera */
+  -moz-filter: blur(5px);
+   -ms-filter: blur(5px);
+       filter: blur(5px);
+
+filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false)
+}
+.ddr > text {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  display: inline;
+  font-size: .85rem;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  color: #666;
+  /* text-align: right; */
+}

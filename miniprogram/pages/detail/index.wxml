@@ -1,0 +1,22 @@
+<!--miniprogram/pages/detail/index.wxml-->
+<view class="detail_box" style="height: {{boxHeight}}">
+  <view>
+    <navigator hover-stay-time="0" class="return" style="padding-top: {{capsuleTop}}" open-type="navigateBack" hover-class="return-hover" url="1">
+      <icon class="iconfont icon-fanhui fonts"></icon>
+    </navigator>
+  </view>
+
+
+  <view class="detail_btns">
+    <icon class="iconfont icon-047caozuo_shangyishou"></icon>
+    <icon class="iconfont {{start?'icon-zanting suspend':'icon-bofang1 start'}}" bind:tap="start"></icon>
+    <icon class="iconfont icon-047caozuo_shangyishou1"></icon>
+  </view>
+  <view class="progressBar">
+    <text>{{Time1}}</text>
+    <view class="allBox">
+      <slider class="allBox_minBox" bind:touchstart="sliderEnd" bindchange="mobile" activeColor="#0a9dff" block-size="12" value="{{audioTime}}"/>
+    </view>
+    <text >{{Time2}}</text>
+  </view>
+</view>
